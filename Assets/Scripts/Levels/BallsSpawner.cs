@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Pang.NumericVariables;
+using Pang.Pools;
 using UnityEngine;
 
 namespace Pang.Levels
@@ -21,20 +22,6 @@ namespace Pang.Levels
             ballsCounterVariable.Initialize(0);
         }
 
-        public void SpawnBall(BallInfo ballInfo)
-        {
-            Ball ball = GetOrCreateBall(ballInfo.Prefab);
-            Vector2 position = new Vector2(
-                Random.Range(screenBoundsHandler.ScreenBounds.xMin + spawnPadding,
-                    screenBoundsHandler.ScreenBounds.xMax - spawnPadding),
-                Random.Range(screenBoundsHandler.ScreenBounds.center.y,
-                    screenBoundsHandler.ScreenBounds.yMax - spawnPadding)
-            );
-            ball.transform.position = position;
-            ball.Initialize(ballInfo.Level, Vector2.right + Vector2.down,
-                () => OnBallExplode(ball), () => OnBallHitPlayer(ball));
-        }
-
         public void DisposeAllBalls()
         {
             foreach (Ball spawnedBall in spawnedBalls)
@@ -43,6 +30,7 @@ namespace Pang.Levels
                 DisposeBall(spawnedBall);
             }
         }
+
         public void Pause()
         {
             foreach (Ball spawnedBall in spawnedBalls)
@@ -59,9 +47,19 @@ namespace Pang.Levels
             }
         }
 
+        public void SpawnBall(BallInfo ballInfo)
+        {
+            Ball ball = GetOrCreateBall(ballInfo.Prefab);
+            var (position, direction) = GetRandomPositionAndDirection();
+            ball.transform.position = position;
+            ball.Initialize(ballInfo.Level, direction,
+                () => OnBallExplode(ball), () => OnBallHitPlayer(ball));
+        }
+
         private Ball GetOrCreateBall(Ball ballPrefab)
         {
-            if (!poolsByPrefab.TryGetValue(ballPrefab.GetHashCode(), out _))
+            // If the pool for this prefab doesn't exist, create it.
+            if (!poolsByPrefab.ContainsKey(ballPrefab.GetHashCode()))
             {
                 poolsByPrefab[ballPrefab.GetHashCode()] = new ObjectsPool<Ball>(ballPrefab);
             }
@@ -80,39 +78,60 @@ namespace Pang.Levels
 
         private void DisposeBall(Ball ball)
         {
+            // Find the id of the prefab that this ball was created from.
             int prefabId = prefabIdByInstanceId[ball.GetHashCode()];
+            // Get the pool for this prefab (Can't be null).
             var objectsPool = poolsByPrefab[prefabId];
             objectsPool.Return(ball);
             ballsCounterVariable.Reduce(1);
         }
 
+        private (Vector2 position, Vector2 direction) GetRandomPositionAndDirection()
+        {
+            // Get a random position inside the screen limits (only top-half of the screen, so we don't immediately hit the user)
+            Vector2 position = new Vector2(
+                Random.Range(screenBoundsHandler.ScreenBounds.xMin + spawnPadding,
+                    screenBoundsHandler.ScreenBounds.xMax - spawnPadding),
+                Random.Range(screenBoundsHandler.ScreenBounds.center.y,
+                    screenBoundsHandler.ScreenBounds.yMax - spawnPadding)
+            );
+            Vector2 direction = Vector2.down;
+            if (Random.Range(0f, 1f) > 0.5f)
+                direction += Vector2.left;
+            else
+                direction += Vector2.right;
+            return (position, direction);
+        }
+
         private void OnBallExplode(Ball ball)
         {
+            // Because we don't want to trigger the value changed event unnecessarily, we use the `BeginModification` method.
             ballsCounterVariable.BeginModification();
             int prefabId = prefabIdByInstanceId[ball.GetHashCode()];
-            var objectsPool = poolsByPrefab[prefabId];
             DisposeBall(ball);
 
+            // If this ball is at the lowest level, we can't split it and therefore exit early.
             if (ball.BallLevel == 1)
             {
                 ballsCounterVariable.EndModification();
                 return;
             }
 
-            // Show explosion stuff
             int ballLevel = ball.BallLevel - 1;
             var position = ball.transform.position;
-            Ball b1 = GetOrCreateBall(prefabId);
-            b1.transform.position = position;
-            b1.Initialize(ballLevel, Vector2.left + Vector2.up / 2f,
-                () => OnBallExplode(b1), () => OnBallHitPlayer(b1));
-            prefabIdByInstanceId[b1.GetHashCode()] = prefabId;
-            Ball b2 = GetOrCreateBall(prefabId);
-            b2.transform.position = position;
-            b2.Initialize(ballLevel, Vector2.right + Vector2.up / 2f,
-                () => OnBallExplode(b2), () => OnBallHitPlayer(b2));
-            prefabIdByInstanceId[b2.GetHashCode()] = prefabId;
-            ballsCounterVariable.EndModification();
+            // Instantiate the left ball
+            CreateBallFromExplosion(prefabId, position, ballLevel, Vector2.left);
+            // Instantiate the right ball
+            CreateBallFromExplosion(prefabId, position, ballLevel, Vector2.right);
+        }
+
+        private void CreateBallFromExplosion(int prefabId, Vector3 position, int ballLevel, Vector2 direction)
+        {
+            Ball ball = GetOrCreateBall(prefabId);
+            ball.transform.position = position;
+            ball.Initialize(ballLevel, direction + Vector2.up / 2f,
+                () => OnBallExplode(ball), () => OnBallHitPlayer(ball));
+            prefabIdByInstanceId[ball.GetHashCode()] = prefabId;
         }
 
         private void OnBallHitPlayer(Ball ball)

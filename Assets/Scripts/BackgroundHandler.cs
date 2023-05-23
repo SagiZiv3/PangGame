@@ -57,10 +57,6 @@ namespace Pang
 
             // Apply the new scale to the GameObject containing the SpriteRenderer
             transform.localScale = newScale;
-
-            // Vector3 current = wallsTransform.localScale;
-            // current.x = newScale.x;
-            // wallsTransform.localScale = current;
         }
     }
 }

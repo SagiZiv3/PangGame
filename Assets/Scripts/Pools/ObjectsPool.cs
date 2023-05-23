@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Pang
+namespace Pang.Pools
 {
     internal class ObjectsPool<T> : Pool<T> where T : Object
     {

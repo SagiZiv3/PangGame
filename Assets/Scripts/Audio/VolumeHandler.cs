@@ -37,6 +37,7 @@ namespace Pang.Audio
         private static float VolumePercentageToDb(float linearValue) =>
             Mathf.Log10(Mathf.Max(linearValue, 0.0001f)) * 20f;
 
+        // For this function, we assume that the naming convention is {groupName}Volume.
         private static string GetVolumeVariableName(string groupName) => $"{groupName}Volume";
     }
 }

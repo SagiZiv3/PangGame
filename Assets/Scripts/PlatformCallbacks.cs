@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Pang.InputHandlers
+namespace Pang
 {
     internal sealed class PlatformCallbacks : MonoBehaviour
     {

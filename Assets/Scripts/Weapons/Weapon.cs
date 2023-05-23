@@ -7,9 +7,6 @@ namespace Pang.Weapons
         [SerializeField] private WeaponAnimation weaponAnimation;
         [SerializeField] private bool canFire = true;
 
-        // [ContextMenu("Fire")]
-        // private void Fire() => Fire(transform.position);
-
 
         public void Fire(Vector2 position)
         {

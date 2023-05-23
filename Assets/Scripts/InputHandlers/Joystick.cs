@@ -23,6 +23,7 @@ namespace Pang.InputHandlers
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            // Move joystick back to the center.
             joystickTransform.anchoredPosition = Vector2.zero;
             OnMove?.Invoke(Vector2.zero);
         }

@@ -7,7 +7,7 @@ namespace Pang.InputHandlers
     {
         [SerializeField] private Button fireButton;
         [SerializeField] private Joystick joystick;
-        private Vector2 movement;
+        private Vector2 movement; // The input we get from the joystick.
 
         private void OnEnable()
         {

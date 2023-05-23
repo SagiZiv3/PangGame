@@ -48,7 +48,6 @@ namespace Pang
 
         private void BallsCounterVariableValueChanged(int remainingBalls)
         {
-            Debug.Log($"Balls: {remainingBalls}");
             if (remainingBalls != 0 || healthVariable.Value == 0 || gameTimerVariable.Value == 0) return;
             enabled = false;
             onPlayerWon.Invoke();

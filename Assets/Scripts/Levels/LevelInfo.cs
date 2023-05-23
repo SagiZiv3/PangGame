@@ -6,7 +6,7 @@ namespace Pang.Levels
     [CreateAssetMenu(menuName = "Levels/Create Level Info", fileName = "LevelInfo")]
     internal sealed class LevelInfo : ScriptableObject
     {
-        [field: SerializeField] public int Duration { get; private set; }
+        [field: SerializeField, Tooltip("In seconds")] public int Duration { get; private set; }
         [field: SerializeField] public BallInfo[] Balls { get; private set; }
         [field: SerializeField] public Background Background { get; private set; }
 

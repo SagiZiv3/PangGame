@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Pang
+namespace Pang.Pools
 {
     internal class Pool<T>
     {

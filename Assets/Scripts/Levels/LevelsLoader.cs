@@ -7,8 +7,6 @@ namespace Pang.Levels
 {
     internal sealed class LevelsLoader : MonoBehaviour
     {
-        private const string LevelKeyName = "Pang_Level";
-
         [SerializeField] private LevelInfo[] levels;
         [SerializeField] private BackgroundHandler backgroundHandler;
         [SerializeField] private BallsSpawner ballsSpawner;
@@ -16,11 +14,6 @@ namespace Pang.Levels
         [SerializeField] private UnityEvent levelLoaded;
         private Coroutine ballsSpawnCoroutine;
         private bool isPaused;
-
-        // private void Start()
-        // {
-        //     LoadLevel(0);
-        // }
 
         public int NumLevels => levels.Length;
         

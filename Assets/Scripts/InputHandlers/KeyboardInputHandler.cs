@@ -5,18 +5,20 @@ namespace Pang.InputHandlers
 {
     internal sealed class KeyboardInputHandler : InputHandler
     {
+        [SerializeField] private KeyCode leftKeyCode = KeyCode.A, rightKeyCode = KeyCode.D, fireKeyCode = KeyCode.Space;
+
         protected override float GetMovementImpl()
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(leftKeyCode))
                 return -1;
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(rightKeyCode))
                 return 1;
             return 0;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(fireKeyCode))
             {
                 Fire();
             }
