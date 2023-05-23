@@ -1260,6 +1260,18 @@ MonoBehaviour:
           m_StringArgument: '!GAME OVER!'
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 858108142}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: d63f1b8c295527f4bb17497ec271835e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPlayerOutOfTime:
     m_PersistentCalls:
       m_Calls:
@@ -1273,6 +1285,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Game Over, Time is up
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 858108142}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: d63f1b8c295527f4bb17497ec271835e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   onPlayerWon:
@@ -3578,6 +3602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4e3660c9fa451fa1951e4da776f4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftKeyCode: 97
+  rightKeyCode: 100
+  fireKeyCode: 32
 --- !u!1 &1371052937
 GameObject:
   m_ObjectHideFlags: 0

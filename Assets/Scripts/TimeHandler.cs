@@ -30,8 +30,8 @@ namespace Pang
             while (timerVariable.Value > 0)
             {
                 while (isPaused) yield return null;
-                timerVariable.Reduce(1);
                 yield return waitOneSecond;
+                timerVariable.Reduce(1);
             }
         }
     }
