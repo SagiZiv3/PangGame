@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03d139bec314a46a9ae54621119d453, type: 3}
+  m_Name: Level 3
+  m_EditorClassIdentifier: 
+  <Duration>k__BackingField: 90
+  <Balls>k__BackingField:
+  - {fileID: 11400000, guid: 289fe70078c89db4d92a8a69cac4abc6, type: 2}
+  - {fileID: 11400000, guid: 30d83ef9a8d5206438807bb6018a0fb7, type: 2}
+  - {fileID: 11400000, guid: 30d83ef9a8d5206438807bb6018a0fb7, type: 2}
+  <Background>k__BackingField: {fileID: 11400000, guid: b807d8486c844694784ca4cafbb5f69a, type: 2}

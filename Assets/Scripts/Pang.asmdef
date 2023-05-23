@@ -1,0 +1,18 @@
+{
+    "name": "Pang",
+    "rootNamespace": "Pang",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:87c520224c4eb39408e51c62a18af3a1",
+        "GUID:34dddab84b5c9dd46b5e93a751711e84"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
